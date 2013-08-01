@@ -4,7 +4,7 @@
 
 %% API
 -export([get_time/0]).
--include("inc/domain.hrl").
+-include("domain.hrl").
 
 -spec get_time() ->
   non_neg_integer().
