@@ -6,15 +6,22 @@
 -export([process_field/1, new_field/0]).
 -include("domain.hrl").
 
-change_state(Field) ->
-  erlang:error(not_implemented).
+change_state(Field, Now) ->
+  change_state({Field#field.status, Field, Now}).
+
+change_state({growing_field, Field, Now}) ->
+  #field{
+    status = grown_field,
+    content = Field#field.content
+  }.
 
 process_field(Field) when is_record(Field, field) ->
   Now = commons:get_time(),
   NextStatusChange = Field#field.next_status_change,
   if
     NextStatusChange == 0 -> Field;
-    Now >= NextStatusChange -> change_state(Field);
+    Now >= NextStatusChange -> NewField = change_state(Field, Now),
+      process_field(NewField);
     true -> Field
   end;
 

@@ -7,6 +7,6 @@
 
 run_test() ->
   code:add_path("farmer-app/ebin"),
-  application:start(farmerl),
-  WorkerId = hd(farmerl_supervisor:get_worker_list()),
-  gen_server:call({global, WorkerId}, ping).
+  application:start(farmerl).
+  %WorkerId = hd(farmerl_supervisor:get_worker_list()),
+  %gen_server:call({global, WorkerId}, ping).
